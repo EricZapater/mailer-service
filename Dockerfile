@@ -8,6 +8,7 @@ RUN go mod download
 COPY . .
 RUN go mod tidy
 
+COPY templates /app/templates
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/server
 
