@@ -1,0 +1,79 @@
+basePath: /api
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: API per enviar emails amb templates i attachments
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Mailer Service API
+  version: "1.0"
+paths:
+  /send:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Envia un email utilitzant un template amb possibles attachments
+      parameters:
+      - description: Email destinatari
+        in: formData
+        name: mail_to
+        required: true
+        type: string
+      - description: Assumpte del email
+        in: formData
+        name: subject
+        required: true
+        type: string
+      - description: Cos del email
+        in: formData
+        name: body
+        type: string
+      - description: Nom del template a utilitzar
+        in: formData
+        name: template_name
+        type: string
+      - description: Peu del email
+        in: formData
+        name: footer
+        type: string
+      - description: Email en còpia
+        in: formData
+        name: mail_cc
+        type: string
+      - description: Fitxers adjunts (pot haver-n'hi més d'un)
+        in: formData
+        name: attachments
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Envia un email
+      tags:
+      - emails
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

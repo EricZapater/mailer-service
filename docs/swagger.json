@@ -1,0 +1,117 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API per enviar emails amb templates i attachments",
+        "title": "Mailer Service API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "paths": {
+        "/send": {
+            "post": {
+                "description": "Envia un email utilitzant un template amb possibles attachments",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "emails"
+                ],
+                "summary": "Envia un email",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email destinatari",
+                        "name": "mail_to",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Assumpte del email",
+                        "name": "subject",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Cos del email",
+                        "name": "body",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nom del template a utilitzar",
+                        "name": "template_name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Peu del email",
+                        "name": "footer",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Email en còpia",
+                        "name": "mail_cc",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "file",
+                        "description": "Fitxers adjunts (pot haver-n'hi més d'un)",
+                        "name": "attachments",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}
