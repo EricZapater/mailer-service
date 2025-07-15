@@ -76,10 +76,11 @@ func (h *Handler) SendEmail(c *gin.Context) {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read file"})
 				return
 			}
-
+			mimetype := http.DetectContentType(buf.Bytes())
 			attachments = append(attachments, model.Attachment{
 				Filename: fh.Filename,
 				Content:  buf.Bytes(),
+				ContentType: mimetype,
 			})
 		}
 
